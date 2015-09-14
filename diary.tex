@@ -1,0 +1,222 @@
+\documentclass[a4paper]{memoir}
+\usepackage[svgnames]{xcolor}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage{xifthen}
+\usepackage[utf8x]{inputenc}
+\usepackage{ucs}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{calrsfs}
+\usepackage{enumerate}
+%\usepackage[cm]{fullpage}
+\usetikzlibrary{cd}
+\usepackage{datetime}
+\usepackage{bbding}
+\usepackage{hyperref}
+\usepackage{caption}
+
+\usepackage[breakable, theorems, skins]{tcolorbox}
+\tcbset{enhanced}
+
+\DeclareRobustCommand{\mybox}[2][gray!20]{%
+\begin{tcolorbox}[   %% Adjust the following parameters at will.
+        breakable,
+        left=0pt,
+        right=0pt,
+        top=0pt,
+        bottom=0pt,
+        colback=#1,
+        colframe=#1,
+        width=\dimexpr\textwidth\relax, 
+        enlarge left by=0mm,
+        boxsep=5pt,
+        arc=0pt,outer arc=0pt,
+        ]
+        #2
+\end{tcolorbox}
+}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{url}
+\ifpdf
+\usepackage{pdfcolmk}
+\fi
+%% check if using xelatex rather than pdflatex
+\ifxetex
+\usepackage{fontspec}
+\fi
+\usepackage{graphicx}
+%%\usepackage{hyperref}
+%% drawing package
+\usepackage{tikz}
+%% for dingbats
+\usepackage{pifont}
+\newlength{\drop}% for my convenience
+%% specify the Webomints family
+\newcommand*{\wb}[2]{\fontsize{#1}{#2}\usefont{U}{webo}{xl}{n}}
+%% select a (FontSite) font by its font family ID
+\newcommand*{\FSfont}[1]{\fontencoding{T1}\fontfamily{#1}\selectfont}
+%% if you don’t have the FontSite fonts either \renewcommand*{\FSfont}[1]{}
+%% or use your own choice of family.
+%% select a (TeX Font) font by its font family ID
+\newcommand*{\TXfont}[1]{\fontencoding{T1}\fontfamily{#1}\selectfont}
+%% Generic publisher’s logo
+\newcommand*{\plogo}{
+$\begin{tikzpicture}[scale=0.5,rotate=180, transform shape]
+  \fill (0,0) -- (90:1) -- (126:0.618);
+  \fill (0,0) -- (162:1) -- (198:0.618);
+  \fill (0,0) -- (234:1) -- (270:0.618);
+  \fill (0,0) -- (306:1) -- (342:0.618);
+  \fill (0,0) -- (18:1) -- (54:0.618);
+  \pgfsetfillcolor{gray}
+  \fill (162:1) -- (126:1) -- (126:0.618);
+  \fill (234:1) -- (198:1) -- (198:0.618);
+  \fill (306:1) -- (270:1) -- (270:0.618);
+  \fill  (18:1) -- (342:1) -- (342:0.618);
+  \fill  (90:1) --  (54:1) --  (54:0.618);
+  \draw (90:1) -- (126:1) -- (162:1) -- (198:1) -- (234:1) -- (270:1) -- (306:1) -- (342:1) -- (18:1) -- (54:1) -- (90:1);
+\end{tikzpicture}$}
+%% Some shades
+\definecolor{Dark}{gray}{0.2}
+\definecolor{MedDark}{gray}{0.4}
+\definecolor{Medium}{gray}{0.6}
+\definecolor{Light}{gray}{0.8}
+%%%% Additional font series macros
+\makeatletter
+%%%% light series
+%% e.g., kernel doc, section s: line 12 or thereabouts
+\DeclareRobustCommand\ltseries
+{\not@math@alphabet\ltseries\relax
+\fontseries\ltdefault\selectfont}
+%% e.g., kernel doc, section t: line 32 or thereabouts
+\newcommand{\ltdefault}{l}
+%% e.g., kernel doc, section v: line 19 or thereabouts
+\DeclareTextFontCommand{\textlt}{\ltseries}
+% heavy(bold) series
+\DeclareRobustCommand\hbseries
+{\not@math@alphabet\hbseries\relax
+\fontseries\hbdefault\selectfont}
+\newcommand{\hbdefault}{hb}
+\DeclareTextFontCommand{\texthb}{\hbseries}
+\makeatother
+
+\newcommand*{\titleS}{\begingroup% Scripts, T&H p 151
+\drop = 0.1\textheight
+\centering
+\vspace*{\drop}
+{\Huge A Diary}\\[\baselineskip]
+by\\
+{\large\itshape Firstname\\ Middlename\\ Lastname}\\[\baselineskip]
+\vfill
+\rule{0.4\textwidth}{0.4pt}\\[\baselineskip]
+{\large\itshape No Publisher}\par
+\vspace*{\drop}
+\endgroup}
+
+\newcommand*{\titleWH}{\begingroup% Words in their Hands
+\drop = 2\baselineskip
+\centering
+\vspace*{\drop}
+{\Huge A DIARY}\\[\drop]
+\scalebox{8}[1]{$\Diamond$}\\[\drop]
+{\itshape by}\\[\baselineskip]
+{\Large\itshape Firstname}\\%[\baselineskip] 
+{\Large\itshape Middlename}\\%[\baselineskip] 
+{\Large\itshape Lastname}\\[\baselineskip]
+%{$\Diamond$}\\[\baselineskip]
+%{\Large\itshape with a Commentary by}\\[\baselineskip]
+%{\Large A N OTHER}\par
+\vfill
+\scalebox{8}[1]{$\Diamond$}\\[\drop]
+%{\Large NO PUBLISHER}\\
+\plogo \\[\baselineskip]
+{\scshape 2015}\par
+\vspace*{\drop}
+\endgroup}
+
+\newcommand{\logtitleprime}[2]
+{\leftspringright{0.7}{0.3}{\textbf{#2}}{\textit{#1}}}
+
+\newcommand{\logtitle}[2]
+{\setsubsecheadstyle{\logtitleprime{#2}}
+\subsection*{#1}}
+
+\newenvironment{loggentry}[1]{
+%  \begin{center}{\Large #1}\end{center}
+\section*{#1}
+\vspace{-1em}
+\begin{center}
+\begin{tikzpicture}\draw (0,0) -- (4,0); \end{tikzpicture}
+\end{center}
+\vspace{-2em}
+}{\vspace{0.5cm}}
+
+\def\?#1{}
+
+\pgfmathtruncatemacro{\StartYear}{2015}
+\pgfmathtruncatemacro{\EndYear}{2015}
+
+\newcommand{\writetitle}{0}
+\newcommand{\mytitle}[1]
+{   \ifthenelse{\writetitle=1}{#1}{}
+}
+
+\newread\mysource
+
+%\makepagestyle{plain}
+%\makeevenfoot{plain}{}{}{\thepage}
+%\makeoddfoot{plain}{\thepage}{}{}
+
+\isopage
+\checkandfixthelayout
+
+\begin{document}
+\pagestyle{empty}
+\titleWH
+\clearpage
+
+\pagestyle{ruled}
+
+\usdate
+
+\newcommand*{\undercenter}[1]{
+  \begin{center}{\Large #1}\end{center}
+  \begin{center}\rule[1ex]{.5\textwidth}{.5pt}\end{center}
+}
+
+\frontmatter
+\tableofcontents*
+\mainmatter
+
+\setsecheadstyle{\Large\center}
+
+\foreach \Year in {\StartYear,...,\EndYear}
+{   \IfFileExists{\Year/a}{\part*{\Year}}{}
+    \foreach \Month in {1,...,12}
+    {   \IfFileExists{\Year/\Month/a}
+        {
+            \chapter*{\monthname[\Month], \Year} 
+            \addcontentsline{toc}{chapter}{\monthname[\Month], \Year}
+            \markboth{\monthname[\Month], \Year}{\monthname[\Month], \Year}
+        }{}
+        \foreach \Day in {1,...,31}
+        {   \IfFileExists{\Year/\Month/\Day}
+                {   \openin\mysource=\Year/\Month/\Day.tex
+%                    \addcontentsline{toc}{section}{\formatdate{\Day}{\Month}{\Year}}
+                    \begin{loggentry}{\formatdate{\Day}{\Month}{\Year}} %\markboth{}{\formatdate{\Day}{\Month}{\Year}}
+                    \input{\Year/\Month/\Day}
+                    \end{loggentry} 
+                }
+                {   % files does not exist, so nothing to do
+                }
+            
+        }  
+    }
+}
+
+\end{document}
